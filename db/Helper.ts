@@ -1,12 +1,11 @@
 import pool from "./Pool";
 import { resultPG } from "./types";
 
-export let get = async (values: string[], table: string, filters: string) => {
+export let get = async (table: string, values: string[], filters: string) => {
   let result: resultPG = { data: undefined, error: undefined };
 
   try {
     const client = await pool.connect();
-    
     let listValues = '';
     values.forEach((value) => { listValues === '' ? listValues += `${value}` : listValues += `,${value}` });
 
@@ -14,13 +13,17 @@ export let get = async (values: string[], table: string, filters: string) => {
 
     sql != null ? sql += ` WHERE ${filters}` : sql;
 
+    console.log(sql);
+
     const { rows } = await client.query(sql);
     result.data = rows;
+    console.log(rows);
 
     client.release();
 
     return result;
   } catch (error) {
+    console.log(error);
     result.error = error;
     return result;
   }

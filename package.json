@@ -16,7 +16,8 @@
     "pg-hstore": "^2.3.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "sequelize": "^6.19.0"
+    "sequelize": "^6.19.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "17.0.30",
