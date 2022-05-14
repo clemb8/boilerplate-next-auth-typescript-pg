@@ -1,7 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import SequelizeAdapter, { models } from "@next-auth/sequelize-adapter";
-import { Sequelize, DataTypes } from "sequelize";
+import bcrypt from 'bcrypt';
 import { get } from "../../../db/Helper";
 
 
@@ -26,14 +25,22 @@ export default NextAuth({
         console.log("authorize");
         console.log(credentials);
         let values = [`id`, `email`, `password`];
-        let filters = `email = '${credentials?.username}' AND password = '${credentials?.password}'`
+        let filters = `email = '${credentials?.username}'`
         let result = await get('users', values, filters);
-        console.log(result);
 
-        if (result.data && result.data.length > 0) {
+        if (result.data && result.data.length > 0 && credentials) {
+
+          console.log(result.data[0].password);
+          const verified = await bcrypt.compare(credentials.password, result.data[0].password);
+          console.log(verified);
           // Any object returned will be saved in `user` property of the JWT
-          const user = result.data[0];
-          return user
+          if(verified) {
+            const user = result.data[0];
+            return user
+          } else {
+            return null;
+          }
+          
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null

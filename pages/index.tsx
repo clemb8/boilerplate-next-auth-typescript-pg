@@ -3,29 +3,29 @@ import Head from 'next/head'
 import { signIn } from "next-auth/react"
 import Image from 'next/image'
 import { ChangeEventHandler, useState } from 'react'
-
-type Values = {
-  username: string,
-  password: string
-}
+import Values from '../types/Auth'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
 
+  const router = useRouter();
   const [values, setValues] = useState<Values>({username: "", password: ""});
+  const [error, setError] = useState<string>('');
   
   const setValueUsername = (e: React.ChangeEvent<HTMLInputElement>)=> {
     console.log(e);
     const newValue = e.target.value;
     setValues({...values, username: newValue});
     console.log(values);
-}
+  }
 
   const setValuePassword = (e: React.ChangeEvent<HTMLInputElement>)=> {
     console.log(e);
     const newValue = e.target.value;
     setValues({...values, password: newValue});
     console.log(values);
-}
+  }
 
 
   return (
@@ -47,6 +47,7 @@ const Home: NextPage = () => {
                   <p className="mb-4">A Next Authentication implementation.</p>
                 </div>
                 <form action="#" method="post">
+                  <p  className='authError'>{error}</p>
                   <div className="form-group">
                     <input className='input form-control' type="text" onChange={setValueUsername} value={values.username} />
                     <label className='label'>Email</label>
@@ -68,12 +69,13 @@ const Home: NextPage = () => {
                     <button type="submit" value="Log In" className="btn btn-pill" onClick={async () => {
                       event?.preventDefault();
                       const res: any = await signIn('credentials', { username: values.username, password: values.password,
-                              callbackUrl: `${window.location.origin}/account_page`,
+                              callbackUrl: `${window.location.origin}/connected`,
                               redirect: false
                             }
                           );
-                      if (res?.error) console.log(res.error)
-                      if (res?.url) console.log(res.url);
+                          console.log(res);
+                      if (res?.error) setError('The credentials provided are wrong')
+                      if (res?.url) router.push('/connected')
                     }}>Log In</button>
 
                     <span className="action-text"> or sign in with</span>
@@ -92,6 +94,9 @@ const Home: NextPage = () => {
                     </a>
                   </div>
                 </form>
+                <div>
+                  <h3>If you do not have register yet : <Link href="/register">Come Here</Link></h3>
+                </div>
                 </div>
               </div>
           </div>

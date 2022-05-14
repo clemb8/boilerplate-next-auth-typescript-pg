@@ -333,3 +333,8 @@ h2 {
   font-size: 12px;
   top: -12px;
 }
+
+.authError {
+  color: #ea4335;
+  font-style: italic;
+}

@@ -38,12 +38,14 @@ export let insert = async (columns: string[], values: string[], table: string) =
     let listValues = '';
     
     columns.forEach((column) => { listColumns === '' ? listColumns += `${column}` : listColumns += `,${column}`});
-    values.forEach((value) => { listValues === '' ? listValues += `${value}` : listValues += `,${value}` });
+    values.forEach((value) => { listValues === '' ? listValues += `'${value}'` : listValues += `,'${value}'` });
 
     let sql = `INSERT INTO ${table}(${listColumns})VALUES(${listValues})`;
+    console.log(sql);
 
-    const { rows } = await client.query(sql);
-    result.data = rows;
+    const res = await client.query(sql);
+    console.log(res);
+    result.data = res;
 
     client.release();
 
