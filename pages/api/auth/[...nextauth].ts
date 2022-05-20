@@ -48,18 +48,17 @@ export default NextAuth({
       }
     })
   ],
-  // adapter: SequelizeAdapter(sequelize, {
-  //   models: {
-  //     User: sequelize.define("userbis", {
-  //       id: {
-  //         type: DataTypes.UUID,
-  //         primaryKey: true,
-  //       },
-  //       username: DataTypes.STRING,
-  //       email: DataTypes.STRING,
-  //       password: DataTypes.STRING,
-  //     }),
-  //   },
-  // }),
+  callbacks: {
+    async jwt(req) {
+      // Persist the OAuth access_token to the token right after signin
+      console.log(req);
+      return req.token
+    },
+
+    async session(req) {
+      // Send properties to the client, like an access_token from a provider.
+      return req.session
+    }
+  }
 
 })
