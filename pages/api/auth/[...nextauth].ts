@@ -2,12 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
 import { get } from "../../../db/Helper";
-
-
-// let sequelize: Sequelize;
-// process.env.DATABASE_URL ? sequelize = new Sequelize(process.env.DATABASE_URL) : sequelize = new Sequelize("");
-// //sequelize.sync();
-// //console.log(sequelize.config);
+import { Session } from "next-auth";
 
 export default NextAuth({
   // https://next-auth.js.org/providers/overview
@@ -49,15 +44,22 @@ export default NextAuth({
     })
   ],
   callbacks: {
-    async jwt(req) {
+    async jwt({ token, user, account }) {
       // Persist the OAuth access_token to the token right after signin
-      console.log(req);
-      return req.token
+      console.log('Token');
+      return token
     },
 
-    async session(req) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
-      return req.session
+      console.log('Session');
+      if(token && token.sub) {
+        session.user.id = token?.sub;
+      }
+
+      return session;
+
+      
     }
   }
 
