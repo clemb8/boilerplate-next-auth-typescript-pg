@@ -41,6 +41,6 @@ NEXTAUTH_SECRET=***
 ```
 
 Install the PostGreSQL Database :
-``bash
+```bash
 docker-compose up
 ```
