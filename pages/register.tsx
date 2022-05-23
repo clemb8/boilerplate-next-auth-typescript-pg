@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import Spinner from '../components/Spinner';
 import Values from '../types/Auth';
 
 type ErrorRegister = {
@@ -22,6 +23,7 @@ const Register: NextPage = () => {
 
   const [values, setValues] = useState<Values>({username: "", password: ""});
   const [errors, setErrors] = useState<ErrorRegister>(initErrors);
+  const [loading, setLoading] = useState<Boolean>(false);
   const router = useRouter();
   
   const setValueUsername = (e: React.ChangeEvent<HTMLInputElement>)=> {
@@ -56,45 +58,53 @@ const Register: NextPage = () => {
   }
 
   return (
-    <main>  
-      <div className="content">
-        <div className="container">
-          <div className="contents">
-            <div className="form-block">
-              <div className="header-form">
-                <h3>Register to <strong>Test</strong></h3>
-                <p className="mb-4">Register in the Application</p>
+    <>
+      <main>  
+        <div className="content">
+          <div className="container">
+            <div className="contents">
+              <div className="form-block">
+                <div className="header-form">
+                  <h3>Register to <strong>Test</strong></h3>
+                  <p className="mb-4">Register in the Application</p>
+                </div>
+                <form action="#" method="post">
+                  {errors.service ? <p className='authError'>{ERRORS_FORM.service}</p> : null}
+                  <div className="form-group">
+                    {errors.username ? <p className='authError'>{ERRORS_FORM.username}</p> : null}
+                    <input className='input form-control' type="text" onBlur={validateUsername} onChange={setValueUsername} value={values.username} />
+                    <label className='label'>Email</label>
+                  </div>
+                  <div className="form-group">
+                    {errors.password ? <p className='authError'>{ERRORS_FORM.password}</p> : null}
+                    <input className='input form-control' type="password" onBlur={validatePassword} onChange={setValuePassword} value={values.password} />
+                    <label className='label'>Password</label>
+                  </div>
+                  <div className="action-form">
+                    {
+                      errors.username || errors.password || values.username === "" || values.password === "" ?
+                      <button type="submit" value="Log In" className="btn btn-pill" disabled></button> :
+                      <button type="submit" value="Log In" className="btn btn-pill" onClick={async () => {
+                        setLoading(true);
+                        event?.preventDefault();
+                        const result = await register(values.username, values.password);
+                        result.status === 201 ? router.push('/') : setErrors({...errors, service: true});
+                        setLoading(false);
+                        console.log(result);
+                      }}>Register</button>
+                    }
+                  </div>
+                </form>
+                </div>
               </div>
-              <form action="#" method="post">
-                {errors.service ? <p className='authError'>{ERRORS_FORM.service}</p> : null}
-                <div className="form-group">
-                  {errors.username ? <p className='authError'>{ERRORS_FORM.username}</p> : null}
-                  <input className='input form-control' type="text" onBlur={validateUsername} onChange={setValueUsername} value={values.username} />
-                  <label className='label'>Email</label>
-                </div>
-                <div className="form-group">
-                  {errors.password ? <p className='authError'>{ERRORS_FORM.password}</p> : null}
-                  <input className='input form-control' type="password" onBlur={validatePassword} onChange={setValuePassword} value={values.password} />
-                  <label className='label'>Password</label>
-                </div>
-                <div className="action-form">
-                  {
-                    errors.username || errors.password || values.username === "" || values.password === "" ?
-                    <button type="submit" value="Log In" className="btn btn-pill" disabled></button> :
-                    <button type="submit" value="Log In" className="btn btn-pill" onClick={async () => {
-                      event?.preventDefault();
-                      const result = await register(values.username, values.password);
-                      result.status === 201 ? router.push('/') : setErrors({...errors, service: true});
-                      console.log(result);
-                    }}>Register</button>
-                  }
-                </div>
-              </form>
-              </div>
-            </div>
+          </div>
         </div>
-      </div>
-    </main>)
+      </main>
+      {
+        loading ? <Spinner></Spinner> : <></>
+      }
+    </>
+  )
 }
 
 export default Register

@@ -163,17 +163,16 @@ h2 {
 }
 
 .content .btn {
-  background-color: #38d39f;
+  border: 0;
   height: 54px;
   width: 80%;
   margin: 10px;
   padding-left: 30px;
   padding-right: 30px;
-}
-
-.content .btn:hover {
-  background-color: rgb(66, 136, 66);
-  cursor: pointer;
+  color: whitesmoke;
+  font-size: 1.25em;
+  font-weight: 200;
+  border-radius: 30px;
 }
 
 .content .forgot-pass {
@@ -183,11 +182,21 @@ h2 {
 }
 
 .content .btn-pill {
-  border: 0;
-  color: whitesmoke;
-  font-size: 1.25em;
-  font-weight: 200;
-  border-radius: 30px;
+  background-color: #38d39f;
+}
+
+.content .btn-pill:hover {
+  background-color: rgb(66, 136, 66);
+  cursor: pointer;
+}
+
+.content .btn-out {
+  background-color: #da4b20;
+}
+
+.content .btn-out:hover {
+  background-color: rgb(99, 23, 17);
+  cursor: pointer;
 }
 
 .social-login {

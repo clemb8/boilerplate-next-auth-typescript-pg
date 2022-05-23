@@ -1,34 +1,32 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { signIn } from "next-auth/react"
-import Image from 'next/image'
-import { ChangeEventHandler, useState } from 'react'
+import { useState } from 'react'
 import Values from '../types/Auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Spinner from '../components/Spinner'
 
 const Home: NextPage = () => {
 
   const router = useRouter();
   const [values, setValues] = useState<Values>({username: "", password: ""});
   const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<Boolean>(false);
   
   const setValueUsername = (e: React.ChangeEvent<HTMLInputElement>)=> {
-    console.log(e);
     const newValue = e.target.value;
     setValues({...values, username: newValue});
-    console.log(values);
   }
 
   const setValuePassword = (e: React.ChangeEvent<HTMLInputElement>)=> {
-    console.log(e);
     const newValue = e.target.value;
     setValues({...values, password: newValue});
-    console.log(values);
   }
 
 
   return (
+    <>
     <div>
       <Head>
         <title>Create Next App</title>
@@ -67,6 +65,7 @@ const Home: NextPage = () => {
 
                   <div className="action-form">
                     <button type="submit" value="Log In" className="btn btn-pill" onClick={async () => {
+                      setLoading(true);
                       event?.preventDefault();
                       const res: any = await signIn('credentials', { username: values.username, password: values.password,
                               callbackUrl: `${window.location.origin}/connected`,
@@ -74,8 +73,9 @@ const Home: NextPage = () => {
                             }
                           );
                           console.log(res);
-                      if (res?.error) setError('The credentials provided are wrong')
-                      if (res?.url) router.push('/connected')
+                      if (res?.error) setError('The credentials provided are wrong');
+                      if (res?.url) router.push('/connected');
+                      setLoading(false);
                     }}>Log In</button>
 
                     <span className="action-text"> or sign in with</span>
@@ -103,6 +103,10 @@ const Home: NextPage = () => {
         </div>
       </main>
     </div>
+    {
+      loading ? <Spinner></Spinner> : <></>
+    }
+    </>
   )
 }
 
