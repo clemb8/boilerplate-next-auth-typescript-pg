@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
 import { get } from "../../../db/Helper";
-import { Session } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 export default NextAuth({
   // https://next-auth.js.org/providers/overview
@@ -41,18 +41,32 @@ export default NextAuth({
           return null
         }
       }
+    }),
+
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     })
   ],
   callbacks: {
     async jwt({ token, user, account }) {
       // Persist the OAuth access_token to the token right after signin
       console.log('Token');
+      console.log(token);
       return token
     },
 
     async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
       console.log('Session');
+      console.log(session);
       if(token && token.sub) {
         session.user.id = token?.sub;
       }
