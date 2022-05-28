@@ -38,6 +38,8 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=***
+GOOGLE_CLIENT_ID=XXX.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=XXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 Install the PostGreSQL Database :
