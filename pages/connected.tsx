@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react"
-import Link from 'next/link';
 import { useState } from 'react';
 import NotAuth from '../components/NotAuth';
 import Spinner from '../components/Spinner';
