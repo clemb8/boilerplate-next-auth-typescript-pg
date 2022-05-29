@@ -44,6 +44,11 @@ const Home: NextPage = () => {
     const res: any = await signIn('google', {callbackUrl: `${window.location.origin}/connected`});
   }
 
+  const signInGitHub = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setLoading(true);
+    const res: any = await signIn('github', {callbackUrl: `${window.location.origin}/connected`});
+  }
+
   return (
     <>
     <div>
@@ -88,7 +93,7 @@ const Home: NextPage = () => {
                     <a href="#" className="salesforce">
                       <span className="icon-salesforce mr-3"><FontAwesomeIcon icon={ faSalesforce } /></span> 
                     </a>
-                    <a href="#" className="github">
+                    <a href="#" className="github" onClick={signInGitHub}>
                       <span className="icon-github mr-3"><FontAwesomeIcon icon={ faGithub } /></span> 
                     </a>
                     <a href="#" className="google" onClick={signInGoogle}>

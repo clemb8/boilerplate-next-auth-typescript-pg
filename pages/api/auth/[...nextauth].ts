@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt';
 import { get } from "../../../db/Helper";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 export default NextAuth({
   // https://next-auth.js.org/providers/overview
@@ -53,12 +54,19 @@ export default NextAuth({
           response_type: "code"
         }
       }
+    }),
+
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET
     })
   ],
   callbacks: {
     async jwt({ token, user, account }) {
       // Persist the OAuth access_token to the token right after signin
       console.log('Token');
+      console.log(user);
+      console.log(account);
       console.log(token);
       return token
     },
