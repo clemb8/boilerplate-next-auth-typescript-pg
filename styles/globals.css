@@ -207,6 +207,7 @@ h2 {
 
 .social-login a {
   text-decoration: none;
+  margin-left: 10px;
   position: relative;
   text-align: center;
   color: #fff;
@@ -230,19 +231,19 @@ h2 {
   color: #fff;
 }
 
-.social-login a.facebook {
-  background: #3b5998;
+.social-login a.github {
+  background: #1d1e20;
 }
 
-.social-login a.facebook:hover {
-  background: #344e86;
+.social-login a.github:hover {
+  background: #000000;
 }
 
-.social-login a.twitter {
+.social-login a.salesforce {
   background: #1da1f2;
 }
 
-.social-login a.twitter:hover {
+.social-login a.salesforce:hover {
   background: #0d95e8;
 }
 

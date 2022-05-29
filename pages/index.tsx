@@ -6,6 +6,8 @@ import Values from '../types/Auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Spinner from '../components/Spinner'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faGoogle, faSalesforce } from "@fortawesome/free-brands-svg-icons";
 
 const Home: NextPage = () => {
 
@@ -83,14 +85,14 @@ const Home: NextPage = () => {
                     <span className="action-text"> or sign in with</span>
                   </div>
                   <div className="social-login">
-                    <a href="#" className="facebook">
-                      <span className="icon-facebook mr-3"></span> 
+                    <a href="#" className="salesforce">
+                      <span className="icon-salesforce mr-3"><FontAwesomeIcon icon={ faSalesforce } /></span> 
                     </a>
-                    <a href="#" className="twitter">
-                      <span className="icon-twitter mr-3"></span> 
+                    <a href="#" className="github">
+                      <span className="icon-github mr-3"><FontAwesomeIcon icon={ faGithub } /></span> 
                     </a>
                     <a href="#" className="google" onClick={signInGoogle}>
-                      <span className="icon-google mr-3"></span> 
+                      <span className="icon-google mr-3"><FontAwesomeIcon icon={ faGoogle } /></span> 
                     </a>
                   </div>
                 </form>
