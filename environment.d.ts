@@ -7,6 +7,8 @@ declare global {
       GITHUB_AUTH_TOKEN: string;
       GITHUB_CLIENT_ID: string;
       GITHUB_CLIENT_SECRET: string;
+      SALESFORCE_CLIENT_ID: string;
+      SALEFORCE_CLIENT_SECRET: string;
       NODE_ENV: 'development' | 'production';
       PORT?: string;
       PWD: string;

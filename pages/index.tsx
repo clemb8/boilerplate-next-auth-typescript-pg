@@ -94,8 +94,8 @@ const Home: NextPage = () => {
                     <button type="submit" value="Log In" className="btn btn-pill" onClick={signInCreds}>Log In</button>
                     <span className="action-text"> or sign in with</span>
                   </div>
-                  <div className="social-login" onClick={signInSalesforce}>
-                    <a href="#" className="salesforce">
+                  <div className="social-login">
+                    <a href="#" className="salesforce" onClick={signInSalesforce}>
                       <span className="icon-salesforce mr-3"><FontAwesomeIcon icon={ faSalesforce } /></span> 
                     </a>
                     <a href="#" className="github" onClick={signInGitHub}>
