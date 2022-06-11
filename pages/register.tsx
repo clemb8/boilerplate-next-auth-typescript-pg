@@ -15,7 +15,7 @@ const Register: NextPage = () => {
   let initErrors = { username: false, password: false, service: false }
   const ERRORS_FORM = {
     username: 'Your username must contains 3 character',
-    password: 'Your password must be',
+    password: 'Your password must be...',
     service: 'Something went wrong, try to refresh the page'
   }
 
@@ -44,17 +44,26 @@ const Register: NextPage = () => {
     regPassword.test(values.password) ? setErrors({...errors, password: false}) : setErrors({...errors, password: true});
   }
 
-  const register = async (username: string, password: string) => {
+  const registerUser = async (username: string, password: string) => {
     let res = await fetch(`/api/register`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({username: username, password: password})
-  });
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: username, password: password})
+    });
     console.log(res);
     return res;
+  }
+
+  const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const result = await registerUser(values.username, values.password);
+    result.status === 201 ? router.push('/') : setErrors({...errors, service: true});
+    setLoading(false);
+    console.log(result);
   }
 
   return (
@@ -83,15 +92,8 @@ const Register: NextPage = () => {
                   <div className="action-form">
                     {
                       errors.username || errors.password || values.username === "" || values.password === "" ?
-                      <button type="submit" value="Log In" className="btn btn-pill" disabled></button> :
-                      <button type="submit" value="Log In" className="btn btn-pill" onClick={async () => {
-                        setLoading(true);
-                        event?.preventDefault();
-                        const result = await register(values.username, values.password);
-                        result.status === 201 ? router.push('/') : setErrors({...errors, service: true});
-                        setLoading(false);
-                        console.log(result);
-                      }}>Register</button>
+                      <button type="submit" value="Log In" className="btn btn-pill" disabled>Register</button> :
+                      <button type="submit" value="Log In" className="btn btn-pill" onClick={register}>Register</button>
                     }
                   </div>
                 </form>

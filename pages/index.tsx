@@ -49,6 +49,11 @@ const Home: NextPage = () => {
     const res: any = await signIn('github', {callbackUrl: `${window.location.origin}/connected`});
   }
 
+  const signInSalesforce = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setLoading(true);
+    const res: any = await signIn('salesforce', {callbackUrl: `${window.location.origin}/connected`});
+  }
+
   return (
     <>
     <div>
@@ -89,7 +94,7 @@ const Home: NextPage = () => {
                     <button type="submit" value="Log In" className="btn btn-pill" onClick={signInCreds}>Log In</button>
                     <span className="action-text"> or sign in with</span>
                   </div>
-                  <div className="social-login">
+                  <div className="social-login" onClick={signInSalesforce}>
                     <a href="#" className="salesforce">
                       <span className="icon-salesforce mr-3"><FontAwesomeIcon icon={ faSalesforce } /></span> 
                     </a>

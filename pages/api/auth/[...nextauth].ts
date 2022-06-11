@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { get } from "../../../db/Helper";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import SalesforceProvider from "next-auth/providers/github";
 
 export default NextAuth({
   // https://next-auth.js.org/providers/overview
@@ -59,6 +60,11 @@ export default NextAuth({
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
+    }),
+
+    SalesforceProvider({
+      clientId: process.env.SALESFORCE_CLIENT_ID,
+      clientSecret: process.env.SALESFORCE_CLIENT_SECRET,
     })
   ],
   callbacks: {

@@ -185,9 +185,21 @@ h2 {
   background-color: #38d39f;
 }
 
+.content .btn-pill:disabled {
+  background-color: #c2c7c5;
+  color: #7b7b7b;
+  cursor: not-allowed;
+}
+
 .content .btn-pill:hover {
   background-color: rgb(66, 136, 66);
   cursor: pointer;
+}
+
+.content .btn-pill:hover:disabled {
+  background-color: #c2c7c5;
+  color: #7b7b7b;
+  cursor: not-allowed;
 }
 
 .content .btn-out {
